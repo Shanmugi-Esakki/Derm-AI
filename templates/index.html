@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skin Disease Classifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f1f9fe, #dbeeff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #004579;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #004579;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #004579;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00335a;
+        }
+
+        .result {
+            margin-top: 25px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        #preview {
+            max-width: 320px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Skin Disease Classifier</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result" class="result"></div>
+    <img id="preview" alt="Uploaded Preview">
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('file', e.target.file.files[0]);
+
+            const response = await fetch('/', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                document.getElementById('result').innerText = `Error: ${data.error}`;
+            } else {
+                document.getElementById('result').innerText = 
+                    `Prediction: ${data.prediction} (Confidence: ${data.confidence})`;
+                document.getElementById('preview').src = data.image_url;
+                document.getElementById('preview').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

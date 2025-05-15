@@ -43,15 +43,16 @@ SkinDiseaseDetection/
 - **Input Size:** 224 x 224 RGB images
 - **Output:** 9 skin disease classes
 - **Classes:**
-  - Acne
-  - Eczema
+  - Basal Cell Carcinoma
+  - Dermatofibroma
   - Melanoma
-  - Psoriasis
-  - Rosacea
-  - Vitiligo
-  - Impetigo
-  - Warts
-  - Normal
+  - Nevus
+  - Acitinic Keratosis
+  - Pigmented Benign Keratosis
+  - Seborrheic Keratosis
+  - Squamous Cell Carcinoma
+  - Vascular Lesion
+#### Dataset taken from kaggle - https://www.kaggle.com/datasets/pritpal2873/multiple-skin-disease-detection-and-classification
 
 ---
 
